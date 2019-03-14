@@ -1,0 +1,83 @@
+
+//ATHAR HUSSAIN MALLA
+//CS-A S4
+//ROLLNO:-26     REGNO:-12180028
+
+//-----------------------------------------------------------------------------//
+
+
+
+mysql> show tables;
++-----------------+
+| Tables_in_Ather |
++-----------------+
+| Department      |
+| Employee        |
+| student         |
++-----------------+
+
+select * from Employee;
++-----+--------+--------+------+--------+------------+----------+------------+---------+---------+
+| Eno | Ename  | Salary | Dno  | MNGRNO | DOJ        | Job      | Address    | City    | Pincode |
++-----+--------+--------+------+--------+------------+----------+------------+---------+---------+
+|   2 | Deepak |  30000 |   20 |      2 | 1999-11-12 | Manager  | Edapally   | Mumbai  |  142000 |
+|   3 | James  |  42000 |   10 |      3 | 2000-01-01 | Manager  | Kalloor    | Chennai |  123456 |
+|   4 | kumar  |  33600 |   40 |      4 | 1997-01-01 | Manager  | Kozhikode  | kochi   |  682022 |
+|   5 | Meera  |  38400 |   30 |      1 | 1997-01-01 | Sn Clerk | Mallapuram | kochi   |  682022 |
+|   6 | Arjun  |  39600 |   40 |      4 | 2005-01-01 | Sn Clerk | Vellor     | kochi   |  682032 |
+|   7 | Ather  |  48000 |   30 |   NULL | 2017-08-14 | Lecturer | Botingoo   | Sopore  |  193201 |
+|   8 | JoN    |  40800 |   40 |      4 | 2006-01-01 | Teacher  | Vellor     | kochi   |  682032 |
++-----+--------+--------+------+--------+------------+----------+------------+---------+---------+
+
+mysql> select * from Department;
++-----+-------+------------+
+| Dno | Dname | D_hod      |
++-----+-------+------------+
+|  10 | CE    | Ms Nitha   |
+|  20 | IT    | Ms Sheena  |
+|  30 | CS    | Ms latha   |
+|  40 | Sales | Mr English |
++-----+-------+------------+
+
+
+mysql> select Ename,Job,Dname from Employee,Department where Ename in(select Dname from Department);
+Empty set (0.00 sec)
+mysql> select * from Employee left join Department on Employee.Dno=Department.Dno;
++-----+--------+--------+------+--------+------------+----------+------------+---------+---------+------+-------+------------+
+| Eno | Ename  | Salary | Dno  | MNGRNO | DOJ        | Job      | Address    | City    | Pincode | Dno  | Dname | D_hod      |
++-----+--------+--------+------+--------+------------+----------+------------+---------+---------+------+-------+------------+
+|   3 | James  |  42000 |   10 |      3 | 2000-01-01 | Manager  | Kalloor    | Chennai |  123456 |   10 | CE    | Ms Nitha   |
+|   2 | Deepak |  30000 |   20 |      2 | 1999-11-12 | Manager  | Edapally   | Mumbai  |  142000 |   20 | IT    | Ms Sheena  |
+|   5 | Meera  |  38400 |   30 |      1 | 1997-01-01 | Sn Clerk | Mallapuram | kochi   |  682022 |   30 | CS    | Ms latha   |
+|   7 | Ather  |  48000 |   30 |   NULL | 2017-08-14 | Lecturer | Botingoo   | Sopore  |  193201 |   30 | CS    | Ms latha   |
+|   4 | kumar  |  33600 |   40 |      4 | 1997-01-01 | Manager  | Kozhikode  | kochi   |  682022 |   40 | Sales | Mr English |
+|   6 | Arjun  |  39600 |   40 |      4 | 2005-01-01 | Sn Clerk | Vellor     | kochi   |  682032 |   40 | Sales | Mr English |
+|   8 | JoN    |  40800 |   40 |      4 | 2006-01-01 | Teacher  | Vellor     | kochi   |  682032 |   40 | Sales | Mr English |
++-----+--------+--------+------+--------+------------+----------+------------+---------+---------+------+-------+------------+
+
+mysql> select * from Employee right join Department on Employee.Dno=Department.Dno;
++------+--------+--------+------+--------+------------+----------+------------+---------+---------+-----+-------+------------+
+| Eno  | Ename  | Salary | Dno  | MNGRNO | DOJ        | Job      | Address    | City    | Pincode | Dno | Dname | D_hod      |
++------+--------+--------+------+--------+------------+----------+------------+---------+---------+-----+-------+------------+
+|    2 | Deepak |  30000 |   20 |      2 | 1999-11-12 | Manager  | Edapally   | Mumbai  |  142000 |  20 | IT    | Ms Sheena  |
+|    3 | James  |  42000 |   10 |      3 | 2000-01-01 | Manager  | Kalloor    | Chennai |  123456 |  10 | CE    | Ms Nitha   |
+|    4 | kumar  |  33600 |   40 |      4 | 1997-01-01 | Manager  | Kozhikode  | kochi   |  682022 |  40 | Sales | Mr English |
+|    5 | Meera  |  38400 |   30 |      1 | 1997-01-01 | Sn Clerk | Mallapuram | kochi   |  682022 |  30 | CS    | Ms latha   |
+|    6 | Arjun  |  39600 |   40 |      4 | 2005-01-01 | Sn Clerk | Vellor     | kochi   |  682032 |  40 | Sales | Mr English |
+|    7 | Ather  |  48000 |   30 |   NULL | 2017-08-14 | Lecturer | Botingoo   | Sopore  |  193201 |  30 | CS    | Ms latha   |
+|    8 | JoN    |  40800 |   40 |      4 | 2006-01-01 | Teacher  | Vellor     | kochi   |  682032 |  40 | Sales | Mr English |
++------+--------+--------+------+--------+------------+----------+------------+---------+---------+-----+-------+------------+
+
+mysql> select * from Employee left join Department on Employee.Dno=Department.Dno UNION select * from Employee right join Department on Employee.Dno=Department.dno;
++------+--------+--------+------+--------+------------+----------+------------+---------+---------+------+-------+------------+
+| Eno  | Ename  | Salary | Dno  | MNGRNO | DOJ        | Job      | Address    | City    | Pincode | Dno  | Dname | D_hod      |
++------+--------+--------+------+--------+------------+----------+------------+---------+---------+------+-------+------------+
+|    3 | James  |  42000 |   10 |      3 | 2000-01-01 | Manager  | Kalloor    | Chennai |  123456 |   10 | CE    | Ms Nitha   |
+|    2 | Deepak |  30000 |   20 |      2 | 1999-11-12 | Manager  | Edapally   | Mumbai  |  142000 |   20 | IT    | Ms Sheena  |
+|    5 | Meera  |  38400 |   30 |      1 | 1997-01-01 | Sn Clerk | Mallapuram | kochi   |  682022 |   30 | CS    | Ms latha   |
+|    7 | Ather  |  48000 |   30 |   NULL | 2017-08-14 | Lecturer | Botingoo   | Sopore  |  193201 |   30 | CS    | Ms latha   |
+|    4 | kumar  |  33600 |   40 |      4 | 1997-01-01 | Manager  | Kozhikode  | kochi   |  682022 |   40 | Sales | Mr English |
+|    6 | Arjun  |  39600 |   40 |      4 | 2005-01-01 | Sn Clerk | Vellor     | kochi   |  682032 |   40 | Sales | Mr English |
+|    8 | JoN    |  40800 |   40 |      4 | 2006-01-01 | Teacher  | Vellor     | kochi   |  682032 |   40 | Sales | Mr English |
++------+--------+--------+------+--------+------------+----------+------------+---------+---------+------+-------+------------+
+

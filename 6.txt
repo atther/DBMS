@@ -1,0 +1,118 @@
+//ATHAR HUSSAIN MALLA
+//CS-A S4
+//ROLLNO:-26     REGNO:-12180028
+
+//-----------------------------------------------------------------------------//
+
+
+mysql> create table Account2 (AccNo int (10) primary key,AccName varchar(15),Balance int(10));
+mysql> desc Account2;
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| AccName | varchar(15) | YES  |     | NULL    |       |
+| Balance | int(10)     | YES  |     | NULL    |       |
+| AccNo   | int(15)     | NO   | PRI | NULL    |       |
++---------+-------------+------+-----+---------+-------+
+
+mysql> create table Transaction2 (TranId int (10),AccNo int(15),Foreign key (AccNo) references Account2(AccNo),TransDate date,Amount int(10),TransType varchar(10));
+mysql> desc Transaction2;
++-----------+-------------+------+-----+---------+-------+
+| Field     | Type        | Null | Key | Default | Extra |
++-----------+-------------+------+-----+---------+-------+
+| TranId    | int(10)     | YES  |     | NULL    |       |
+| AccNo     | int(15)     | YES  | MUL | NULL    |       |
+| TransDate | date        | YES  |     | NULL    |       |
+| Amount    | int(10)     | YES  |     | NULL    |       |
+| TransType | varchar(10) | YES  |     | NULL    |       |
++-----------+-------------+------+-----+---------+-------+
+
+
+mysql> insert into Account2 values("Ather",2000,573001);
+mysql> insert into Account2 values("Deepak k",3000,573002);
+mysql> insert into Account2 values("Deepak Cd",4000,573003);
+
+mysql> insert into Transaction2 values(12101,573001,"2019-01-10",1000,"Deposit");
+mysql> insert into Transaction2 values(12102,573002,"2019-02-10",2000,"Withdrawl");
+mysql> insert into Transaction2 values(12103,573003,"2019-03-10",1500,"Withdrawl");
+
+
+
+mysql> select * from Account2;
++-----------+---------+--------+
+| AccName   | Balance | AccNo  |
++-----------+---------+--------+
+| Ather     |    2000 | 573001 |
+| Deepak k  |    3000 | 573002 |
+| Deepak Cd |    4000 | 573003 |
++-----------+---------+--------+
+mysql> select * from Transaction2;
++--------+--------+------------+--------+-----------+
+| TranId | AccNo  | TransDate  | Amount | TransType |
++--------+--------+------------+--------+-----------+
+|  12101 | 573001 | 2019-01-10 |   1000 | Deposit   |
+|  12102 | 573002 | 2019-02-10 |   2000 | Withdrawl |
+|  12103 | 573003 | 2019-03-10 |   1500 | Withdrawl |
++--------+--------+------------+--------+-----------+
+
+
+
+
+
+
+
+
+
+
+
+
+
+6.a)mysql> select * from Account2 where Balance =(select max(Balance) from Account2);
++-----------+---------+--------+
+| AccName   | Balance | AccNo  |
++-----------+---------+--------+
+| Deepak Cd |    4000 | 573003 |
++-----------+---------+--------+
+
+
+
+
+6b)mysql> select AccName from Account2 where AccNo =(select AccNo from Transaction2 group by AccNo ,week(TransDate) having (count(week(TransDate))>1));
++-----------+
+| AccName   |
++-----------+
+| Deepak Cd |
++-----------+
+
+
+
+
+
+
+
+6.c)mysql> select AccName , Balance from Account2 where AccNo in(select AccNo from Transaction2 where Amount>2500 and TransType="WithDrawal" and month(TransDate)=month(now()));
++-----------+---------+
+| AccName   | Balance |
++-----------+---------+
+| Deepak Cd |  300000 |
+| Deepak k  |    3000 |
+| Ather     |    2000 |
++-----------+---------+
+
+
+
+
+
+
+
+6.d)mysql> Select AccName from Account2,Transaction2 where Account2.AccNo=Transaction2.AccNo and month(Transdate)<>month(now());
++----------+
+| AccName  |
++----------+
+| Ather    |
+| Deepak k |
++----------+
+mysql> select AccName ,Balance from Account2,Transaction2 where Account2.AccNo=Transaction2.AccNo and Amount>2500 and TransType="Withdrawl" and month(TransDate)<>month(now());
+
+
+

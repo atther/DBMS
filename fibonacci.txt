@@ -1,0 +1,49 @@
+//ATHAR HUSSAIN MALLA
+//CS-A S4
+//ROLLNO:-26     REGNO:-12180028
+
+//-----------------------------------------------------------------------------//
+
+
+//-----------------------------------------------------------------------------------------------
+mysql> delimiter #
+mysql> create procedure feb(n int)
+    -> begin
+    -> declare a int;
+    -> declare b int;
+    ->     declare sum int;
+    ->     declare count int;
+    ->     set sum=0,count=0,a=0,b=1;
+    ->     create table fs(num int);
+    ->     insert into fs values(a);
+    ->     insert into fs values(b);
+    ->     while count<=n-3
+    ->     do
+    ->     set sum=a+b;
+    ->     insert into fs values(sum);
+    ->     set a=b;
+    ->     set b=sum;
+    ->     set count=count+1;
+    ->     end while ;
+    ->     select * from fs;
+    ->     drop table fs;
+    ->     end #
+Query OK, 0 rows affected (0.00 sec)
+mysql> delimiter ;
+mysql> call feb(10);
++------+
+| num  |
++------+
+|    0 |
+|    1 |
+|    1 |
+|    2 |
+|    3 |
+|    5 |
+|    8 |
+|   13 |
+|   21 |
+|   34 |
++------+
+10 rows in set (0.90 sec)
+

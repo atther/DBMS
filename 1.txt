@@ -1,0 +1,79 @@
+//ATHAR HUSSAIN MALLA
+//CS-A S4
+//ROLLNO:-26     REGNO:-12180028
+
+//-----------------------------------------------------------------------------//
+				CYCLE 1
+
+QUESTION:-1
+create table student(Name varchar(10),RollNo int(10),Age int(3),Branch varchar(10));
+ 
+mysql> desc student;
++--------+-------------+------+-----+---------+-------+
+| Field  | Type        | Null | Key | Default | Extra |
++--------+-------------+------+-----+---------+-------+
+| Name   | varchar(10) | YES  |     | NULL    |       |
+| RollNo | int(10)     | YES  |     | NULL    |       |
+| Age    | int(3)      | YES  |     | NULL    |       |
+| Branch | varchar(10) | YES  |     | NULL    |       |
++--------+-------------+------+-----+---------+-------+
+
+1.A)
+mysql> insert into student values ('Ather',1,19,'CS'),('fazal',2,19,'EC'),('Mishu',3,19,'CS');
+
+1.B)
+mysql> alter table student ADD(TotalMarks int(3));
+mysql> desc student;
++------------+-------------+------+-----+---------+-------+
+| Field      | Type        | Null | Key | Default | Extra |
++------------+-------------+------+-----+---------+-------+
+| Name       | varchar(10) | YES  |     | NULL    |       |
+| RollNo     | int(10)     | YES  |     | NULL    |       |
+| Age        | int(3)      | YES  |     | NULL    |       |
+| Branch     | varchar(10) | YES  |     | NULL    |       |
+| TotalMarks | int(3)      | YES  |     | NULL    |       |
++------------+-------------+------+-----+---------+-------
+mysql> update student set TotalMarks=75 where RollNo=1;
+mysql> update student set TotalMarks=90 where RollNo=2;
+mysql> update student set TotalMarks=95 where RollNo=3;
+
+1.C)
+mysql> select * from student;
++-------+--------+------+--------+------------+
+| Name  | RollNo | Age  | Branch | TotalMarks |
++-------+--------+------+--------+------------+
+| Ather |      1 |   19 | CS     |         75 |
+| fazal |      2 |   19 | EC     |         90 |
+| Mishu |      3 |   19 | CS     |         95 |
++-------+--------+------+--------+------------+
+mysql> select Name as Student_Name,RollNo as Student_RollNo from student;
++--------------+----------------+
+| Student_Name | Student_RollNo |
++--------------+----------------+
+| Ather        |              1 |
+| fazal        |              2 |
+| Mishu        |              3 |
++--------------+----------------+
+
+1.D)
+mysql> select * from student where Branch='CS';
++-------+--------+------+--------+------------+
+| Name  | RollNo | Age  | Branch | TotalMarks |
++-------+--------+------+--------+------------+
+| Ather |      1 |   19 | CS     |         75 |
+| Mishu |      3 |   19 | CS     |         95 |
++-------+--------+------+--------+------------+
+
+1.E)
+mysql> select min(TotalMarks),max(TotalMarks),avg(TotalMarks) from student;
++-----------------+-----------------+-----------------+
+| min(TotalMarks) | max(TotalMarks) | avg(TotalMarks) |
++-----------------+-----------------+-----------------+
+|              75 |              95 |         86.6667 |
++-----------------+-----------------+-----------------+
+
+
+//-----------------------------------------------------------------------------//
+
+
+

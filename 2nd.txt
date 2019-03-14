@@ -1,0 +1,358 @@
+
+
+
+
+
+2.a:-mysql> select Ename  from Employee where DOJ >'1998-1-1' and Dno != 30;
++--------+
+| Ename  |
++--------+
+| Deepak |
+| James  |
+| Arjun  |
++--------+
+
+
+
+
+
+2.b:-mysql> select Ename from Employee where Dno !=30;
++--------+
+| Ename  |
++--------+
+| Deepak |
+| James  |
+| kumar  |
+| Arjun  |
++--------+
+
+
+
+
+
+
+
+
+
+
+
+
+2.c:-mysql> select Ename from Employee  where Dno=40;
++-------+
+| Ename |
++-------+
+| kumar |
+| Arjun |
++-------+
+
+
+
+2.d:-mysql> select Ename from Employee  where MNGRNO IS NULL;
++-------+
+| Ename |
++-------+
+| Ather |
++-------+
+
+
+
+
+
+
+
+
+
+
+2.e:-mysql> select Ename from Employee  where Ename like "J_N%";
++-------+
+| Ename |
++-------+
+| JoN   |
++-------+
+
+
+
+
+
+
+
+
+
+
+2.f:-mysql> select Ename from Employee  where DOJ like "2000%";
++-------+
+| Ename |
++-------+
+| James |
++-------+
+
+
+
+
+
+
+
+
+
+
+
+2.g:-mysql> select "Every Year ",Ename,"Earns",12*Salary from Employee; 
++-------------+--------+-------+-----------+
+| Every Year  | Ename  | Earns | 12*Salary |
++-------------+--------+-------+-----------+
+| Every Year  | jhon   | Earns |    240000 |
+| Every Year  | Deepak | Earns |    300000 |
+| Every Year  | James  | Earns |    420000 |
+| Every Year  | kumar  | Earns |    336000 |
+| Every Year  | Meera  | Earns |    384000 |
+| Every Year  | Arjun  | Earns |    396000 |
+| Every Year  | Ather  | Earns |    480000 |
+| Every Year  | JoN    | Earns |    408000 |
++-------------+--------+-------+-----------+
+
+
+
+
+
+
+
+
+
+
+3.h:-mysql> select count(*) from Employee;
++----------+
+| count(*) |
++----------+
+|        8 |
++----------+
+
+
+
+
+
+
+
+
+
+
+
+
+2.i:-mysql> select Job, min(Salary) from Employee group by Job;
++----------+-------------+
+| Job      | min(Salary) |
++----------+-------------+
+| Clerk    |       32000 |
+| Lecturer |       40000 |
+| Manager  |       20000 |
+| Teacher  |       34000 |
++----------+-------------+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+2.j:-mysql> select Job, min(Salary) from Employee where Salary>7000 group by Job;
++----------+-------------+
+| Job      | min(Salary) |
++----------+-------------+
+| Clerk    |       32000 |
+| Lecturer |       40000 |
+| Manager  |       20000 |
+| Teacher  |       34000 |
++----------+-------------+
+
+
+
+
+
+
+
+
+2.k:-mysql> select  min(Salary) from Employee where job ="Manager";
++-------------+
+| min(Salary) |
++-------------+
+|       20000 |
++-------------+
+
+
+
+
+
+
+
+
+
+
+
+
+2.l:-mysql> select Ename as "Name of Clerk" ,Dname as "Department" from Employee,Department where Employee.Dno=Department.Dno and Job ="Clerk";
++---------------+------------+
+| Name of Clerk | Department |
++---------------+------------+
+| Meera         | CS         |
+| Arjun         | Sales      |
++---------------+------------+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+2.m:-mysql> select Ename ,DATE_FORMAT(Doj,'%d-%m-%y') as "Doj" from Employee;
++--------+----------+
+| Ename  | Doj      |
++--------+----------+
+| jhon   | 07-05-95 |
+| Deepak | 12-11-99 |
+| James  | 01-01-00 |
+| kumar  | 01-01-97 |
+| Meera  | 01-01-97 |
+| Arjun  | 01-01-05 |
+| Ather  | 14-08-17 |
+| JoN    | 01-01-06 |
++--------+----------+
+
+
+
+
+
+
+
+
+
+
+2.n:-mysql> update Employee set Salary =1.2*Salary;
+
+
+mysql> select * from Employee;
++-----+--------+--------+------+--------+------------+----------+-------------------+---------+---------+
+| Eno | Ename  | Salary | Dno  | MNGRNO | DOJ        | Job      | Address           | City    | Pincode |
++-----+--------+--------+------+--------+------------+----------+-------------------+---------+---------+
+|   1 | jhon   |  24000 |   30 |      1 | 1995-05-07 | Manager  | South Kalamaserry | Kochi   |  682022 |
+|   2 | Deepak |  30000 |   20 |      2 | 1999-11-12 | Manager  | Edapally          | Mumbai  |  142000 |
+|   3 | James  |  42000 |   10 |      3 | 2000-01-01 | Manager  | Kalloor           | Chennai |  123456 |
+|   4 | kumar  |  33600 |   40 |      4 | 1997-01-01 | Manager  | Kozhikode         | kochi   |  682022 |
+|   5 | Meera  |  38400 |   30 |      1 | 1997-01-01 | Clerk    | Mallapuram        | kochi   |  682022 |
+|   6 | Arjun  |  39600 |   40 |      4 | 2005-01-01 | Clerk    | Vellor            | kochi   |  682032 |
+|   7 | Ather  |  48000 |   30 |   NULL | 2017-08-14 | Lecturer | Botingoo          | Sopore  |  193201 |
+|   8 | JoN    |  40800 |   40 |      4 | 2006-01-01 | Teacher  | Vellor            | kochi   |  682032 |
++-----+--------+--------+------+--------+------------+----------+-------------------+---------+---------+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+2.o:-mysql> update Employee set Salary =10000 where Salary <7000;
+
+mysql> select * from Employee;
++-----+--------+--------+------+--------+------------+----------+-------------------+---------+---------+
+| Eno | Ename  | Salary | Dno  | MNGRNO | DOJ        | Job      | Address           | City    | Pincode |
++-----+--------+--------+------+--------+------------+----------+-------------------+---------+---------+
+|   1 | jhon   |  24000 |   30 |      1 | 1995-05-07 | Worker   | South Kalamaserry | Kochi   |  682022 |
+|   2 | Deepak |  30000 |   20 |      2 | 1999-11-12 | Manager  | Edapally          | Mumbai  |  142000 |
+|   3 | James  |  42000 |   10 |      3 | 2000-01-01 | Manager  | Kalloor           | Chennai |  123456 |
+|   4 | kumar  |  33600 |   40 |      4 | 1997-01-01 | Manager  | Kozhikode         | kochi   |  682022 |
+|   5 | Meera  |  38400 |   30 |      1 | 1997-01-01 | Clerk    | Mallapuram        | kochi   |  682022 |
+|   6 | Arjun  |  39600 |   40 |      4 | 2005-01-01 | Clerk    | Vellor            | kochi   |  682032 |
+|   7 | Ather  |  48000 |   30 |   NULL | 2017-08-14 | Lecturer | Botingoo          | Sopore  |  193201 |
+|   8 | JoN    |  40800 |   40 |      4 | 2006-01-01 | Teacher  | Vellor            | kochi   |  682032 |
++-----+--------+--------+------+--------+------------+----------+-------------------+---------+---------+
+
+
+2.p:-mysql> update Employee set Job="Sn Clerk" where Salary>10000 and Job="Clerk";
+
+
+mysql> select * from Employee;
++-----+--------+--------+------+--------+------------+----------+-------------------+---------+---------+
+| Eno | Ename  | Salary | Dno  | MNGRNO | DOJ        | Job      | Address           | City    | Pincode |
++-----+--------+--------+------+--------+------------+----------+-------------------+---------+---------+
+|   1 | jhon   |  24000 |   30 |      1 | 1995-05-07 | Work er  | South Kalamaserry | Kochi   |  682022 |
+|   2 | Deepak |  30000 |   20 |      2 | 1999-11-12 | Manager  | Edapally          | Mumbai  |  142000 |
+|   3 | James  |  42000 |   10 |      3 | 2000-01-01 | Manager  | Kalloor           | Chennai |  123456 |
+|   4 | kumar  |  33600 |   40 |      4 | 1997-01-01 | Manager  | Kozhikode         | kochi   |  682022 |
+|   5 | Meera  |  38400 |   30 |      1 | 1997-01-01 | Sn Clerk | Mallapuram        | kochi   |  682022 |
+|   6 | Arjun  |  39600 |   40 |      4 | 2005-01-01 | Sn Clerk | Vellor            | kochi   |  682032 |
+|   7 | Ather  |  48000 |   30 |   NULL | 2017-08-14 | Lecturer | Botingoo          | Sopore  |  193201 |
+|   8 | JoN    |  40800 |   40 |      4 | 2006-01-01 | Teacher  | Vellor            | kochi   |  682032 |
++-----+--------+--------+------+--------+------------+----------+-------------------+---------+---------+
+
+
+
+
+
+2.Q:-mysql> delete from Employee where Doj="1998-01-01";
+mysql> select * from Employee;
++-----+--------+--------+------+--------+------------+----------+-------------------+---------+---------+
+| Eno | Ename  | Salary | Dno  | MNGRNO | DOJ        | Job      | Address           | City    | Pincode |
++-----+--------+--------+------+--------+------------+----------+-------------------+---------+---------+
+|   1 | jhon   |  24000 |   40 |      1 | 1995-05-07 | Worker   | South Kalamaserry | Kochi   |  682022 |
+|   2 | Deepak |  30000 |   20 |      2 | 1999-11-12 | Manager  | Edapally          | Mumbai  |  142000 |
+|   3 | James  |  42000 |   10 |      3 | 2000-01-01 | Manager  | Kalloor           | Chennai |  123456 |
+|   4 | kumar  |  33600 |   40 |      4 | 1997-01-01 | Manager  | Kozhikode         | kochi   |  682022 |
+|   5 | Meera  |  38400 |   30 |      1 | 1997-01-01 | Sn Clerk | Mallapuram        | kochi   |  682022 |
+|   6 | Arjun  |  39600 |   40 |      4 | 2005-01-01 | Sn Clerk | Vellor            | kochi   |  682032 |
+|   7 | Ather  |  48000 |   30 |   NULL | 2017-08-14 | Lecturer | Botingoo          | Sopore  |  193201 |
+|   8 | JoN    |  40800 |   40 |      4 | 2006-01-01 | Teacher  | Vellor            | kochi   |  682032 |
++-----+--------+--------+------+--------+------------+----------+-------------------+---------+---------+
+
+
+
+
+
+
+
+
+
+
+
+
+
+2.r:-mysql> delete from Employee where Job="Worker" and Dno in (select Dno from Department where Dname ="Sales");
+mysql> select * from Employee;
++-----+--------+--------+------+--------+------------+----------+------------+---------+---------+
+| Eno | Ename  | Salary | Dno  | MNGRNO | DOJ        | Job      | Address    | City    | Pincode |
++-----+--------+--------+------+--------+------------+----------+------------+---------+---------+
+|   2 | Deepak |  30000 |   20 |      2 | 1999-11-12 | Manager  | Edapally   | Mumbai  |  142000 |
+|   3 | James  |  42000 |   10 |      3 | 2000-01-01 | Manager  | Kalloor    | Chennai |  123456 |
+|   4 | kumar  |  33600 |   40 |      4 | 1997-01-01 | Manager  | Kozhikode  | kochi   |  682022 |
+|   5 | Meera  |  38400 |   30 |      1 | 1997-01-01 | Sn Clerk | Mallapuram | kochi   |  682022 |
+|   6 | Arjun  |  39600 |   40 |      4 | 2005-01-01 | Sn Clerk | Vellor     | kochi   |  682032 |
+|   7 | Ather  |  48000 |   30 |   NULL | 2017-08-14 | Lecturer | Botingoo   | Sopore  |  193201 |
+|   8 | JoN    |  40800 |   40 |      4 | 2006-01-01 | Teacher  | Vellor     | kochi   |  682032 |
++-----+--------+--------+------+--------+------------+----------+------------+---------+---------+
+

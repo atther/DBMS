@@ -1,0 +1,113 @@
+//ATHAR HUSSAIN MALLA
+//CS-A S4
+//ROLLNO:-26     REGNO:-12180028
+
+//-----------------------------------------------------------------------------//
+
+
+
+
+create table Accounts (Acc_No int(15) PRIMARY KEY,Acc_Name varchar(20),Address varchar(20),Acc_Type varchar(20),Balance int(20),Phone int(12),Pan_No int(15));
+create table Tansaction(Trans_id int(10),Acc_No int(15),FOREIGN KEY(Acc_No) REFERENCES Accounts(Acc_No),Trans_Type varchar(20));
+
+
+
+mysql> desc Accounts;
++----------+-------------+------+-----+---------+-------+
+| Field    | Type        | Null | Key | Default | Extra |
++----------+-------------+------+-----+---------+-------+
+| Acc_No   | int(15)     | NO   | PRI | NULL    |       |
+| Acc_Name | varchar(20) | YES  |     | NULL    |       |
+| Address  | varchar(20) | YES  |     | NULL    |       |
+| Acc_Type | varchar(20) | YES  |     | NULL    |       |
+| Balance  | int(20)     | YES  |     | NULL    |       |
+| Phone    | int(12)     | YES  |     | NULL    |       |
+| Pan_No   | int(15)     | YES  |     | NULL    |       |
++----------+-------------+------+-----+---------+-------+
+
+mysql> desc Tansactions;
++------------+-------------+------+-----+---------+-------+
+| Field      | Type        | Null | Key | Default | Extra |
++------------+-------------+------+-----+---------+-------+
+| Trans_id   | int(10)     | YES  |     | NULL    |       |
+| Acc_No     | int(15)     | YES  | MUL | NULL    |       |
+| Trans_Type | varchar(20) | YES  |     | NULL    |       |
++------------+-------------+------+-----+---------+-------+
+
+
+
+mysql> select * from Accounts;
++----------+----------+---------+----------+---------+-------+--------+
+| Acc_No   | Acc_Name | Address | Acc_Type | Balance | Phone | Pan_No |
++----------+----------+---------+----------+---------+-------+--------+
+|  1218003 | Mishuuk  | Kerala  | Saving   |     300 |  1956 |  10103 |
+| 12180001 | Ather    | Kashmir | Current  |  300000 |  1954 |  10100 |
+| 12180002 | Deepak   | Bihar   | Fixed    |   30000 |  1954 |  10101 |
++----------+----------+---------+----------+---------+-------+--------+
+mysql> select * from Tansactions;
++----------+----------+------------+
+| Trans_id | Acc_No   | Trans_Type |
++----------+----------+------------+
+|     2190 | 12180001 | current    |
+|     2192 | 12180002 | saving     |
+|     2193 |  1218003 | mixed      |
++----------+----------+------------+
+
+
+
+5.a.i:-create view Acc_view as select Acc_Name,Acc_NO,Pan_No from Accounts where Acc_Type='current';
+Query OK, 0 rows affected (0.04 sec)
+
+5.a.ii:-create view Tran_view as select Acc_Name,Phone,Balance from Accounts,Transactions where Accounts.Acc_No=Transactions.Acc_No and Trans_date not like '2019/02%' and Balance>100000;
+Query OK, 0 rows affected (0.04 sec)
+
+5.b:-
+mysql> select * from Acc_view;
++----------+----------+--------+
+| Acc_Name | Acc_NO   | Pan_No |
++----------+----------+--------+
+| Ather    | 12180001 |  10100 |
++----------+----------+--------+
+select * from Tran_view;                                                                                                                                          +----------+-------+---------+
+| Acc_Name | Phone | Balance |
++----------+-------+---------+
+| Ather    |  1954 |  300000 |
++----------+-------+---------+
+
+
+5.c:-mysql> update Accounts set Acc_type="SB" where Balance < 5000;
+Query OK, 1 row affected (0.07 sec)
+mysql> select * from Accounts;
++----------+----------+---------+----------+---------+-------+--------+
+| Acc_No   | Acc_Name | Address | Acc_Type | Balance | Phone | Pan_No |
++----------+----------+---------+----------+---------+-------+--------+
+|  1218003 | Mishuuk  | Kerala  | SB       |     300 |  1956 |  10103 |
+| 12180001 | Ather    | Kashmir | Current  |  300000 |  1954 |  10100 |
+| 12180002 | Deepak   | Bihar   | Fixed    |   30000 |  1954 |  10101 |
++----------+----------+---------+----------+---------+-------+--------+
+
+
+
+5.d:-mysql> Insert Into Transactions (Trans_id,Acc_No,Trans_Type,Trans_date,Amount) select "2194",Accounts.Acc_No,"Saving","2019/02/07","1000" from Accounts,Transactions where Accounts.Acc_No=Transactions.Acc_No and month(Trans_date)<>month(now())and Balance>200000;
+mysql> select * from Transactions;
++----------+----------+------------+------------+--------+
+| Trans_id | Acc_No   | Trans_Type | Trans_date | Amount |
++----------+----------+------------+------------+--------+
+|     2190 | 12180001 | Current    | 2019-02-28 |   1000 |
+|     2192 | 12180002 | Saving     | 2019-01-02 |    100 |
+|     2193 |  1218003 | Mixed      | 2018-10-02 |    500 |
+|     2194 | 12180001 | Saving     | 2019-02-07 |   1000 |
++----------+----------+------------+------------+--------+
+
+
+
+
+
+
+
+
+
+
+
+
+

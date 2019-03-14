@@ -1,0 +1,85 @@
+
+//ATHAR HUSSAIN MALLA
+//CS-A S4
+//ROLLNO:-26     REGNO:-12180028
+
+//-----------------------------------------------------------------------------//
+
+
+mysql> use State;
+mysql> create table kerala(Name varchar(30),literacy int(5),population int(10),area int(5));
+
+
+mysql> desc kerala;
++------------+-------------+------+-----+---------+-------+
+| Field      | Type        | Null | Key | Default | Extra |
++------------+-------------+------+-----+---------+-------+
+| Name       | varchar(30) | YES  |     | NULL    |       |
+| literacy   | int(5)      | YES  |     | NULL    |       |
+| population | int(10)     | YES  |     | NULL    |       |
+| area       | int(5)      | YES  |     | NULL    |       |
++------------+-------------+------+-----+---------+-------+
+
+
+mysql> create table tamilnadu(Name varchar(30),literacy int(5),population int(10),area int(5));
+mysql> desc tamilnadu;
++------------+-------------+------+-----+---------+-------+
+| Field      | Type        | Null | Key | Default | Extra |
++------------+-------------+------+-----+---------+-------+
+| Name       | varchar(30) | YES  |     | NULL    |       |
+| literacy   | int(5)      | YES  |     | NULL    |       |
+| population | int(10)     | YES  |     | NULL    |       |
+| area       | int(5)      | YES  |     | NULL    |       |
++------------+-------------+------+-----+---------+-------+
+
+
+mysql> insert into kerala values("Ernakulam",99,100500,50000);
+
+
+mysql> insert into kerala values("Palakkad",90,97000,43000);
+
+
+mysql> insert into kerala values("Alappuzha",92,87000,37000);
+
+
+mysql> insert into tamilnadu values("Chennai",92,81000,60000);
+
+
+mysql> insert into tamilnadu values("Kanyakumari",90,84000,55000);
+
+
+mysql>  insert into tamilnadu values("Coimbatore",77,62000,99000);
+
+
+3.A:-mysql> select literacy from kerala where literacy IN(select literacy from tamilnadu);
++----------+
+| literacy |
++----------+
+|       92 |
+|       90 |
++----------+
+
+
+3.B:-mysql> select Name from kerala union select Name  from tamilnadu;
++-------------+
+| Name        |
++-------------+
+| Ernakulam   |
+| Palakkad    |
+| Alappuzha   |
+| Chennai     |
+| Kanyakumari |
+| Coimbatore  |
++-------------+
+
+
+3.C:-mysql> select literacy from kerala where literacy not in(select literacy from tamilnadu);
++----------+
+| literacy |
++----------+
+|       99 |
++----------+
+
+
+
+

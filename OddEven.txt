@@ -1,0 +1,63 @@
+//ATHAR HUSSAIN MALLA
+//CS-A S4
+//ROLLNO:-26     REGNO:-12180028
+
+//-----------------------------------------------------------------------------//
+
+
+
+delimiter #
+create procedure OE(n int)
+begin
+declare a int;
+set a=0;
+create table oddtable(odd int);
+create table eventable(even int);
+while(a<n)
+do
+if(a%2=0) then
+insert into eventable values(a);
+else
+insert into oddtable values(a);
+end if;
+set a=a+1;
+end while;
+select * from eventable;
+select * from oddtable;
+drop table eventable;
+drop table oddtable;
+end #
+//---------------------------------------------------------------------
+mysql> delimiter ;
+mysql> call OE(20);
++------+
+| even |
++------+
+|    0 |
+|    2 |
+|    4 |
+|    6 |
+|    8 |
+|   10 |
+|   12 |
+|   14 |
+|   16 |
+|   18 |
++------+
+10 rows in set (1.59 sec)
+
++------+
+| odd  |
++------+
+|    1 |
+|    3 |
+|    5 |
+|    7 |
+|    9 |
+|   11 |
+|   13 |
+|   15 |
+|   17 |
+|   19 |
++------+
+10 rows in set (1.59 sec)
