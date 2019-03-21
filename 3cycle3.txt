@@ -1,0 +1,86 @@
+//ATHAR HUSSAIN MALLA
+//CS-A S4
+//ROLLNO:-26     REGNO:-12180028
+
+//-----------------------------------------------------------------------------//
+mysql> create table Bank(AccNo int(10),AccName varchar (40),Balance int(10));
+mysql> describe Bank;
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| AccNo   | int(10)     | YES  |     | NULL    |       |
+| AccName | varchar(40) | YES  |     | NULL    |       |
+| Balance | int(10)     | YES  |     | NULL    |       |
++---------+-------------+------+-----+---------+-------+
+
+
+create table Transaction(AccNo int(10),Amount int(10),TransType varchar(20));
+mysql> desc Transaction;
++-----------+-------------+------+-----+---------+-------+
+| Field     | Type        | Null | Key | Default | Extra |
++-----------+-------------+------+-----+---------+-------+
+| AccNo     | int(10)     | YES  |     | NULL    |       |
+| Amount    | int(10)     | YES  |     | NULL    |       |
+| TransType | varchar(20) | YES  |     | NULL    |       |
++-----------+-------------+------+-----+---------+-------+
+
+
+mysql> insert into Bank values(12180028,"Ather",50000),(12180030,"Deepak",100000),(12180032,"Fazal",200000);
+mysql> select * from Bank;
++----------+---------+---------+
+| AccNo    | AccName | Balance |
++----------+---------+---------+
+| 12180028 | Ather   |   50000 |
+| 12180030 | Deepak  |  100000 |
+| 12180032 | Fazal   |  200000 |
++----------+---------+---------+
+
+
+mysql> delimiter #
+mysql> create trigger TableTrigger after insert on Transaction for each row
+    -> begin
+    -> if (new.TransType = "Credit") then
+    -> update Bank set Balance = Balance + new.Amount where Bank.AccNo = new.AccNo;
+    -> end if;
+    -> if (new.TransType = "Debit") then
+    -> update Bank set Balance = Balance - new.Amount where Bank.AccNo = new.AccNo;
+    -> end if;
+    -> end #
+
+mysql> delimiter ;
+mysql> insert into Transaction values(12180028,5000,"Credit");
+mysql> select * from Bank;
++----------+---------+---------+
+| AccNo    | AccName | Balance |
++----------+---------+---------+
+| 12180028 | Ather   |   55000 |
+| 12180030 | Deepak  |  100000 |
+| 12180032 | Fazal   |  200000 |
++----------+---------+---------+
+
+
+mysql> insert into Transaction values(12180030,5000,"Debit");
+mysql> select * from Bank;
++----------+---------+---------+
+| AccNo    | AccName | Balance |
++----------+---------+---------+
+| 12180028 | Ather   |   55000 |
+| 12180030 | Deepak  |   95000 |
+| 12180032 | Fazal   |  200000 |
++----------+---------+---------+
+
+
+mysql> insert into Transaction values(12180032,50000,"Debit");
+mysql> select * from Bank;
++----------+---------+---------+
+| AccNo    | AccName | Balance |
++----------+---------+---------+
+| 12180028 | Ather   |   55000 |
+| 12180030 | Deepak  |   95000 |
+| 12180032 | Fazal   |  150000 |
++----------+---------+---------+
+
+
+
+
+

@@ -1,0 +1,99 @@
+//ATHAR HUSSAIN MALLA
+//CS-A S4
+//ROLLNO:-26     REGNO:-12180028
+
+//-----------------------------------------------------------------------------//
+create database Electricity;
+use Electricity;
+
+create table Electricity(ID int(10),Name varchar(40),Address varchar(40),lread int(10),cread int(10),month int(10),year int(10),charge int default 2);
+desc elect;
++--------+-------------+------+-----+---------+-------+
+| Field  | Type        | Null | Key | Default | Extra |
++--------+-------------+------+-----+---------+-------+
+| id     | int(10)     | YES  |     | NULL    |       |
+| name   | varchar(40) | YES  |     | NULL    |       |
+| addr   | varchar(40) | YES  |     | NULL    |       |
+| lread  | int(10)     | YES  |     | NULL    |       |
+| cread  | int(10)     | YES  |     | NULL    |       |
+| month  | int(10)     | YES  |     | NULL    |       |
+| year   | int(10)     | YES  |     | NULL    |       |
+| charge | int(11)     | YES  |     | 2       |       |
++--------+-------------+------+-----+---------+-------+
+insert into Electricity(ID,Name,Address,lread) values(24180024,"Ather","B123",240),(98569321,"Deepak","A456",350),(15425638,"Fazal","S444",450);
+mysql> select * from Electricity;
++----------+--------+---------+-------+-------+-------+------+--------+
+| ID       | Name   | Address | lread | cread | month | year | charge |
++----------+--------+---------+-------+-------+-------+------+--------+
+| 12180028 | Ather  | B123    |   240 |  NULL |  NULL | NULL |      2 |
+| 12180030 | Deepak | A456    |   350 |  NULL |  NULL | NULL |      2 |
+| 12180032 | Fazal  | S444    |   450 |  NULL |  NULL | NULL |      2 |
++----------+--------+---------+-------+-------+-------+------+--------+
+
+delimiter #
+drop procedure if exists Elect;
+create procedure Elect(cid int,curr_read int)
+begin
+declare done int default 0;
+declare charge int;
+declare lastdate date;
+declare cunit int;
+declare cname varchar(40);
+declare lastread int;
+declare cur cursor for select ID,Name,lread from Electricity where ID=cid;
+declare continue handler for not found set done=1;
+open cur;
+readloop:loop
+fetch cur into cid,cname,lastread;
+if done=1 then
+leave readloop;
+end if;
+set cunit=curr_read+lastread;
+set charge=cunit*2;
+set lastdate=date_add(curdate(),interval 10 day);
+select cid,cname,lastdate,cunit,charge;
+update Electricity set cread=curr_read where ID=cid;
+update Electricity set lread=lastread where ID=cid;
+update Electricity set month=month(lastdate) where ID=cid;
+update Electricity set year=year(lastdate) where ID=cid;
+end loop;
+close cur;
+end #
+
+delimiter ;
+
+
+mysql> call Elect(12180028,300);
++----------+-------+------------+-------+--------+
+| cid      | cname | lastdate   | cunit | charge |
++----------+-------+------------+-------+--------+
+| 12180028 | Ather | 2019-03-31 |   540 |   1080 |
++----------+-------+------------+-------+--------+
+
+mysql> call Elect(12180030,400);
++----------+--------+------------+-------+--------+
+| cid      | cname  | lastdate   | cunit | charge |
++----------+--------+------------+-------+--------+
+| 12180030 | Deepak | 2019-03-31 |   750 |   1500 |
++----------+--------+------------+-------+--------+
+
+
+mysql> call Elect(12180032,400);
++----------+-------+------------+-------+--------+
+| cid      | cname | lastdate   | cunit | charge |
++----------+-------+------------+-------+--------+
+| 12180032 | Fazal | 2019-03-31 |   850 |   1700 |
++----------+-------+------------+-------+--------+
+
+
+
+mysql> select * from Electricity;
++----------+--------+---------+-------+-------+-------+------+--------+
+| ID       | Name   | Address | lread | cread | month | year | charge |
++----------+--------+---------+-------+-------+-------+------+--------+
+| 12180028 | Ather  | B123    |   240 |   300 |     3 | 2019 |      2 |
+| 12180030 | Deepak | A456    |   350 |   400 |     3 | 2019 |      2 |
+| 12180032 | Fazal  | S444    |   450 |   400 |     3 | 2019 |      2 |
++----------+--------+---------+-------+-------+-------+------+--------+
+
+
